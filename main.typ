@@ -66,5 +66,3 @@
 // #include "contents/non-functional-requirements.typ"
 // #include "contents/use-cases.typ"
 // #include "contents/content.typ"
-
-// Test remove
