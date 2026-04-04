@@ -119,9 +119,44 @@
       lang: language,
     )
 
-    set par(justify: true)
+    set par(
+      justify: true,
+      first-line-indent: (amount: 1.5em, all: false),
+      spacing: 0.65em,
+    )
 
     set heading(numbering: "1.1")
+
+    show heading.where(level: 1): it => {
+      pagebreak(weak: true, to: "odd")
+      v(1em)
+      block(
+        below: 1.2em,
+        text(size: 1.4em, weight: "bold")[
+          #counter(heading).display("1.") #h(0.5em) #it.body
+        ]
+      )
+    }
+
+    show heading.where(level: 2): it => {
+      block(
+        above: 1.4em,
+        below: 0.7em,
+        text(size: 1.15em, weight: "bold")[
+          #counter(heading).display("1.1.") #h(0.5em) #it.body
+        ]
+      )
+    }
+
+    show heading.where(level: 3): it => {
+      block(
+        above: 1.2em,
+        below: 0.5em,
+        text(size: 1.0em, weight: "bold")[
+          #counter(heading).display("1.1.1") #h(0.5em) #it.body
+        ]
+      )
+    }
 
     show ref: it => {
       if it.element != none and it.element.func() == heading {
@@ -151,6 +186,11 @@
       )[#it]
     }
 
+    //TODO: niełamliwe spacje przenoszące sieroty do następnego wiersza
+      //regex?
+      //spójniki i przyimki jednoliterowe: a, i, o, u, w, z
+      //wieloliterowe: aż, bo, by, iż, ni, że, co, go, im, ich, jej, mu, on, po, tu, we, ze, alb, ale, ani, aż, bez, dla, gdy, jak, już, lecz, lub, nad, nie, niż, pod, przed, przy, więc
+
     show raw.where(block: true): set text(size: 0.8em)
 
     set enum(indent: 1em, numbering: "1Ii.")
@@ -158,7 +198,7 @@
     set quote(block: true)
 
     show heading: set text(hyphenate: false)
-    show heading.where(level: 1): it => { pagebreak(weak: true, to: "odd"); it }
+    //show heading.where(level: 1): it => { pagebreak(weak: true, to: "odd"); it }
 
     show figure.where(kind: raw): set figure.caption(position: top)
     show figure.where(kind: raw): set block(breakable: true)
@@ -212,9 +252,8 @@
     context {
       show outline: set heading(outlined: true)
       outline(title: "Spis listingów", target: figure.where(kind: raw))
-      outline(title: "Spis tysunków", target: figure.where(kind: image))
+      outline(title: "Spis rysunków", target: figure.where(kind: image))
       outline(title: "Spis tabel", target: figure.where(kind: table))
       // TODO: Spis załączników (jeśli jeszcze go nie ma)
     }
 }
-
