@@ -1,3 +1,5 @@
+#import "../assets/requirement-card.typ": requirement-card
+
 = Specyfikacja wymagań systemowych
 == Sposoby ustalania wymagań
 === Konsultacje
@@ -14,6 +16,16 @@ Grupę docelową stanowili adwokaci i radcowie prawni prowadzący kancelarie w r
 === Aktorzy i diagramy przypadków użycia
 == Diagramy sekwencji
 == Wymagania ogólne i dziedzinowe
+#requirement-card(
+  id: "W1",
+  priority: "M - Must",
+  name: "Lorem ipsum wymaganie",
+  description: [
+    At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident.
+  ],
+  stakeholder: "Quis autem vel eum iure reprehenderit",
+  related: "W2, W3, itd",
+)
 == Wymagania funkcjonalne
 == Wymagania pozafunkcjonalne
 == Wymagania na interfejs z otoczeniem
