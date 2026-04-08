@@ -50,6 +50,22 @@ Lorem ipsum dolor sit amet consectetur adipiscing elit. Ex sapien vitae pellente
   display-name: false,
 )
 
+//TODO: ŁO - Przejrzeć listę
+// #let spojniki = (
+//   "a", "abowiem", "aby", "acz", "aczkolwiek", "albo", "alboć", "albowiem",
+//   "ale", "ani", "aniżeli", "aż", "aże", "ażeby", "bądź", "bo", "bowiem", "by",
+//   "byle", "było", "byś", "choć", "choćby", "chociaż", "czy", "czyli", "dlatego",
+//   "dopóki", "dopóty", "dotąd", "gdy", "gdyby", "gdyż", "i", "ilekroć", "im",
+//   "iż", "jak", "jakby", "jakkolwiek", "jako", "jakoby", "jednak", "jednakowo",
+//   "jednakowoż", "jednakże", "jeśli", "jeśliby", "jeżeli", "kiedy", "lecz",
+//   "ledwie", "ledwo", "lub", "mianowicie", "minus", "nadto", "natomiast",
+//   "niby", "niczym", "niemniej", "nim", "niż", "niżeli", "oraz", "plus",
+//   "poczem", "póki", "ponieważ", "razy", "skoro", "taki", "tj.", "toż",
+//   "tudzież", "tylko", "więc", "wiem", "wprawdzie", "wszelako", "zaledwie",
+//   "zamiast", "zanim", "zarówno", "zaś", "zatem", "że", "żeby"
+// );
+// #show regex( " ((?i)" + spojniki.join("|") + ") " ): it => [ #it.text.trim()~]
+
 #include "contents/chapters/introduction.typ"
 #include "contents/chapters/analysis.typ"
 #include "contents/chapters/planning.typ"

@@ -16,16 +16,63 @@ Grupę docelową stanowili adwokaci i radcowie prawni prowadzący kancelarie w r
 === Aktorzy i diagramy przypadków użycia
 == Diagramy sekwencji
 == Wymagania ogólne i dziedzinowe
+
 #requirement-card(
-  id: "W1",
+  id: "WO1",
   priority: "M - Must",
-  name: "Lorem ipsum wymaganie",
+  name: "Narzędzie do zarządzania dokumentami",
   description: [
-    At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident.
+    Aplikacja musi umożliwiać generowanie i skanowanie kodów QR dla dokumentacji
+    kancelaryjnej i pozwalać na przechowywanie oraz wyszukiwanie zbiorów dokumentów w bazie danych. Przypominanie o terminach związanych z prowadzonymi sprawami. Umożliwienie łatwego wyszukiwania dokumentów oraz współpracy między pracownikami kancelarii poprzez udostępnianie kodów QR.
   ],
-  stakeholder: "Quis autem vel eum iure reprehenderit",
-  related: "W2, W3, itd",
+  stakeholder: "Zespół projektowy",
+  related: "TBD",
 )
+
+#requirement-card(
+  id: "WO2",
+  priority: "S - Should",
+  name: "Zarządzanie współpracą i komunikacją wewnętrzną",
+  description: [
+    Aplikacja powinna ułatwiać współpracę między pracownikami kancelarii poprzez funkcjonalności związane z udostępnianiem kodów QR, przypisywaniem użytkowników do spraw oraz komunikację wewnątrz systemu (poprzez komentarze i powiadomienia).
+  ],
+  stakeholder: "Zespół projektowy",
+  related: "TBD",
+)
+
+#requirement-card(
+  id: "WO3",
+  priority: "S - Should",
+  name: "Zarządzanie terminami i powiadomieniami klientów",
+  description: [
+    System powinien umożliwiać pracownikom kancelarii tworzenie, edytowanie oraz usuwanie terminów powiązanych ze sprawami i klientami. Aplikacja powinna udostępniać funkcjonalności terminarza powiązanego z prowadzonymi sprawami. Klienci kancelarii powinni otrzymywać automatyczne powiadomienia o zmianach w statusie sprawy za pośrednictwem wybranego kanału komunikacji.
+  ],
+  stakeholder: "Zespół projektowy",
+  related: "TBD",
+)
+
+#requirement-card(
+  id: "WD1",
+  priority: "M - Must",
+  name: "Ochrona danych osobowych",
+  description: [
+    System musi przetwarzać dane osobowe klientów kancelarii zgodnie z prawem lokalnym i unijnym oraz rejestrować operacje przetwarzania danych w sposób umożliwiający wykazanie zgodności z przepisami w ramach ewentualnej kontroli organu nadzorczego.
+  ],
+  stakeholder: "Zespół projektowy",
+  related: "TBD",
+)
+
+#requirement-card(
+  id: "WD2",
+  priority: "M - Must",
+  name: "Zachowanie tajemnicy zawodowej",
+  description: [
+    System musi zapewniać ochronę informacji objętych tajemnicą adwokacką i radcowską. Dostęp do akt spraw, dokumentów procesowych oraz danych klientów musi być ograniczony wyłącznie do upoważnionych pracowników kancelarii. System nie może umożliwiać nieuprawnionego ujawnienia, udostępnienia ani wyeksportowania informacji objętych tajemnicą zawodową.
+  ],
+  stakeholder: "Zespół projektowy",
+  related: "TBD",
+)
+
 == Wymagania funkcjonalne
 == Wymagania pozafunkcjonalne
 == Wymagania na interfejs z otoczeniem
