@@ -1,10 +1,11 @@
 #let requirement-card-color = rgb(102, 51, 153)
 
-#let requirement-card(
+#let requirement-card-functional(
   id: "W?",
   priority: "M - Must",
   name: "Nazwa wymagania",
   description: [Opis wymagania.],
+  acceptance-criteria: [Kryteria akceptacji.],
   stakeholder: "—",
   related: "—",
   caption-prefix: "Karta wymagania",
@@ -53,6 +54,9 @@
 
           table.cell(colspan: 1)[*Opis:*],
           table.cell(colspan: 3, align: left)[#description],
+
+          table.cell(colspan: 1)[*Kryteria akceptacji:*],
+          table.cell(colspan: 3, align: left)[#acceptance-criteria],
 
           table.cell(colspan: 1)[*Udziałowiec:*],
           table.cell(colspan: 3)[#stakeholder],
