@@ -21,7 +21,7 @@ Lorem ipsum dolor sit amet consectetur adipiscing elit. Ex sapien vitae pellente
   authors: authors,
   for-printing: false,
 
-  title: "QRLawyer", // TODO: dodać subtitle (krótki opis czym jest QRLawyer)
+  title: "QRLawyer", // TODO(ŁO): dodać subtitle (krótki opis czym jest QRLawyer)
   faculty: "Wydział Informatyki",
   department: "Filia w Gdańsku",
   specialization: "Cyberbezpieczeństwo",
@@ -37,7 +37,6 @@ Lorem ipsum dolor sit amet consectetur adipiscing elit. Ex sapien vitae pellente
 #import "@preview/codly:1.3.0": *
 #import "@preview/codly-languages:0.1.1": *
 #show: codly-init.with()
-
 #codly(
   zebra-fill: none,
   breakable: true,
@@ -50,7 +49,9 @@ Lorem ipsum dolor sit amet consectetur adipiscing elit. Ex sapien vitae pellente
   display-name: false,
 )
 
-//TODO: ŁO - Przejrzeć listę
+#import "@preview/chronos:0.3.0"
+
+//TODO(ŁO): Przejrzeć listę
 // #let spojniki = (
 //   "a", "abowiem", "aby", "acz", "aczkolwiek", "albo", "alboć", "albowiem",
 //   "ale", "ani", "aniżeli", "aż", "aże", "ażeby", "bądź", "bo", "bowiem", "by",

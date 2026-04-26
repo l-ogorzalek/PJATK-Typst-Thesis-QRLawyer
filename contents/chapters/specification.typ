@@ -2,19 +2,26 @@
 #import "../assets/cards/requirement-card-functional.typ": requirement-card-functional
 #import "../assets/cards/stakeholder-card.typ": stakeholder-card
 #import "../assets/tables/acceptance-criteria-table.typ": acceptance-criteria-table
+#import "../assets/diagrams/diagram.typ": diagram
+#import "@preview/chronos:0.3.0"
 
 = Specyfikacja wymagań systemowych
+
 == Sposoby ustalania wymagań
+
 === Konsultacje
 Z perspektywy zespołu, głównym celem konsultacji było ustalenie wymagań systemowych w taki sposób, aby funkcjonalności aplikacji odzwierciedlały potrzeby rynkowe. W związku z powyższym, przeprowadzono kilka głównych serii konsultacyjnych z potencjalnymi użytkownikami końcowymi aplikacji oraz na bieżąco kontaktowano się z adwokatami i radcami prawnymi, weryfikując nowe pomysły i zasięgając ich opinii w kwestiach prawnych. Do stałych konsultantów projektu należeli:
 - Adwokat Jakub Nowosielski -- prowadzący kancelarię adwokacką w Gdyni, adwokat Jakub Nowosielski nieodpłatnie udzielał odpowiedzi na zapytania zespołu związane z jego administracyjną częścią pracy w kancelarii. Pomagał także podczas oceny użyteczności oprogramowania w kontekście codziennych obowiązków i opiniował zastosowane rozwiązania UI/UX.
 - Radca prawny Agnieszka Szczepańska -- świadcząca usługi prawne na terenie Trójmiasta, radca prawny Agnieszka Szczepańska pozostawała w stałym kontakcie z zespołem podczas planowania, jak i procesu tworzenia oraz testowania oprogramowania. W rezultacie współpracy, zespół szybko skonsolidował wymagania systemowe i zdiagnozował błędy podczas symulacji testów akceptacyjnych.
 Na podstawie informacji zwrotnych przygotowano wstępną listę wymagań ogólnych, funkcjonalnych i systemowych oraz przygotowano ankietę wraz z jej analizą.
+
 === Ankieta
 Badanie ankietowe stanowiło jedno z podstawowych narzędzi zastosowanych w procesie elicytacji wymagań. Głównym celem przeprowadzenia ankiety była jednak nie tylko strukturyzacja wymagań systemowych, ale również pozyskanie danych na temat oczekiwań i preferencji potencjalnych użytkowników.
 
 Grupę docelową stanowili adwokaci i radcowie prawni prowadzący kancelarie w ramach jednoosobowej działalności gospodarczej lub w ramach spółki. Ankietę, składającą się z 10 pytań, przeprowadzono poprzez Google Forms. Pytania dotyczyły między innymi wielkości kancelarii, wygody korzystania z obecnie używanych systemów informatycznych, funkcjonalności w obecnie stosowanych rozwiązaniach technologicznych czy też metod uwierzytelniania.
+
 == Przypadki użycia
+
 === Identyfikacja interesariuszy
 
 #stakeholder-card(
@@ -243,7 +250,38 @@ Grupę docelową stanowili adwokaci i radcowie prawni prowadzący kancelarie w r
 
 == Diagramy sekwencji
 
-#text(stroke: 0.5pt + red)[Do uzupełnienia]
+#diagram(
+  [Diagram sekwencji logowania],
+  {
+    import chronos: *
+    
+    _par("User", display-name: "Użytkownik", shape: "actor")
+    _par("App", display-name: "Aplikacja (Frontend)")
+    _par("API", display-name: "Backend (API)")
+    _par("DB", display-name: "Baza Danych", shape: "database")
+  
+    _seq("User", "App", comment: "Wprowadza e-mail i hasło")
+    // TODO: Ustandaryzować jak wołane są metody API (nie POST/GET/etc.)
+    _seq("App", "API", comment: "POST /api/auth/login")
+    _seq("API", "DB", comment: "Pobranie danych użytkownika")
+    _seq("DB", "API", comment: "Zwraca rekord użytkownika", dashed: true)
+    _seq("API", "API", comment: "Weryfikacja hasła")
+    
+    _alt(
+      "Dane logowania poprawne", {
+        _seq("API", "API", comment: "Generowanie tokenu sesji")
+        _seq("API", "App", comment: "200 OK (Token sesji)", dashed: true)
+        // TODO: Jakaś wzmianka gdzie zapisywany jest token?
+        _seq("App", "App", comment: "Zapiasnie tokenu sesji")
+        _seq("App", "User", comment: "Przekierowanie na pulpit główny", dashed: true)
+      },
+      "Dane logowania niepoprawne", {
+        _seq("API", "App", comment: "401 Unauthorized", dashed: true)
+        _seq("App", "User", comment: [Komunikat: "Nieprawidłowy login lub hasło"], dashed: true)
+      }
+    )
+  }
+)
 
 == Wymagania ogólne i dziedzinowe
 
@@ -304,6 +342,7 @@ Grupę docelową stanowili adwokaci i radcowie prawni prowadzący kancelarie w r
 )
 
 == Wymagania funkcjonalne
+
 === Autentykacja i sesja
 
 #requirement-card-functional(
@@ -341,10 +380,10 @@ Grupę docelową stanowili adwokaci i radcowie prawni prowadzący kancelarie w r
   priority: "M - Must",
   name: "Automatyczne wygasanie sesji",
   description: [
-    System musi automatycznie kończyć sesję użytkownika po określonym czasie bezczynności. Użytkownik jest informowany o wygaśnięciu sesji i przekierowywany do ekranu logowania.
+    System musi automatycznie kończyć sesję użytkownika po określonym czasie zalogowania. Użytkownik jest informowany o wygasłej sesji i musi się ponownie zalogować.
   ],
   acceptance-criteria: [
-    Sesja wygasa po #text(stroke: 0.5pt + red)[X] minutach bezczynności użytkownika. Przed wygaśnięciem system wyświetla ostrzeżenie z możliwością przedłużenia sesji. Dane niezapisane w momencie wygaśnięcia sesji nie są tracone -- system przechowuje je tymczasowo do ponownego zalogowania.
+    Sesja wygasa po 5 dniach. Dane niezapisane w momencie wygaśnięcia sesji nie są tracone -- system przechowuje je tymczasowo do ponownego zalogowania.
   ],
   stakeholder: "Klienci kancelarii, Pracownicy kancelarii",
   related: "WF1, WF2, WPF1",
@@ -354,7 +393,7 @@ Grupę docelową stanowili adwokaci i radcowie prawni prowadzący kancelarie w r
   id: "WF4",
   priority: "M - Must",
   name: "Reset hasła",
-  description: [#text(stroke: 0.5pt + red)[Do uzupełnienia]
+  description: [#text(stroke: 0.5pt + red)[User zmienia sam albo superużytkownik zmienia]
   ],
   acceptance-criteria: [#text(stroke: 0.5pt + red)[Do uzupełnienia]
   ],
@@ -379,10 +418,10 @@ Grupę docelową stanowili adwokaci i radcowie prawni prowadzący kancelarie w r
 
 #requirement-card-functional(
   id: "WF6",
-  priority: "M - Must",
+  priority: "S - Should",
   name: "Tryb przerwy technicznej",
   description: [
-    Administrator systemu musi mieć możliwość aktywowania trybu przerwy technicznej, w którym użytkownicy mogą wyłącznie odczytywać swoje dane bez możliwości ich edytowania lub dodawania nowych. Aplikacja wyświetla w tym czasie wyraźny komunikat o trwającej przerwie technicznej.
+    Administrator systemu powinien mieć możliwość aktywowania trybu przerwy technicznej, w którym użytkownicy mogą wyłącznie odczytywać swoje dane bez możliwości ich edytowania lub dodawania nowych. Aplikacja wyświetla w tym czasie wyraźny komunikat o trwającej przerwie technicznej.
   ],
   acceptance-criteria: [
     Po aktywowaniu trybu przerwy technicznej wszystkie operacje zapisu, edycji i usuwania danych są blokowane dla zwykłych użytkowników. Aplikacja wyświetla baner informujący o przerwie oraz przewidywanym czasie jej zakończenia. Superużytkownik zachowuje pełny dostęp do systemu w trakcie przerwy.
@@ -456,12 +495,10 @@ Grupę docelową stanowili adwokaci i radcowie prawni prowadzący kancelarie w r
   priority: "M - Must",
   name: "Profil i ustawienia konta użytkownika",
   description: [
-    Każdy użytkownik musi mieć możliwość przeglądania i edytowania własnych danych profilowych, w tym imienia, nazwiska, zdjęcia profilowego oraz hasła. Zmiana hasła wymaga podania aktualnego
-    hasła.
+    Każdy użytkownik musi mieć możliwość przeglądania i edytowania własnych danych profilowych, w tym imienia, nazwiska, zdjęcia profilowego oraz hasła. Zmiana hasła wymaga podania aktualnego hasła.
   ],
   acceptance-criteria: [
-    Użytkownik może zaktualizować swoje dane profilowe bez udziału superużytkownika. Zmiana hasła jest możliwa wyłącznie po poprawnej weryfikacji aktualnego hasła. Zaktualizowane dane
-    są widoczne natychmiast po zapisaniu.
+    Użytkownik może zaktualizować swoje dane profilowe bez udziału superużytkownika. Zmiana hasła jest możliwa wyłącznie po poprawnej weryfikacji aktualnego hasła. Zaktualizowane dane są widoczne natychmiast po zapisaniu.
   ],
   stakeholder: "Klienci kancelarii, Pracownicy kancelarii",
   related: "WF1, WPF1",
@@ -474,10 +511,10 @@ Grupę docelową stanowili adwokaci i radcowie prawni prowadzący kancelarie w r
   priority: "M - Must",
   name: "Tworzenie nowej sprawy",
   description: [
-    Użytkownik z odpowiednimi uprawnieniami musi mieć możliwość utworzenia nowej sprawy w systemie. Podczas tworzenia sprawy określane są jej podstawowe dane.
+    Użytkownik musi mieć możliwość utworzenia nowej sprawy w systemie. Podczas tworzenia sprawy określane są jej podstawowe dane.
   ],
   acceptance-criteria: [
-    Użytkownik wypełnia formularz tworzenia sprawy i zatwierdza operację. Nowa sprawa pojawia się natychmiast na liście spraw z domyślnym statusem.
+    Użytkownik wypełnia formularz tworzenia sprawy i zatwierdza operację. Nowa sprawa pojawia się natychmiast na liście spraw z właściwym statusem.
   ],
   stakeholder: "Pracownicy kancelarii",
   related: "WF9, WF13, WF14, WF22",
@@ -488,10 +525,10 @@ Grupę docelową stanowili adwokaci i radcowie prawni prowadzący kancelarie w r
   priority: "M - Must",
   name: "Edycja i aktualizacja sprawy",
   description: [
-    Użytkownik przypisany do sprawy musi mieć możliwość edytowania jej danych, w tym nazwy, statusu oraz przypisanych użytkowników. Superużytkownik może edytować dowolną sprawę niezależnie od przypisania.
+    Użytkownik przypisany do sprawy musi mieć możliwość edytowania jej danych, w tym nazwy i przypisanych użytkowników. Superużytkownik może zmienić przypisanego użytkownika w każdym momencie.
   ],
   acceptance-criteria: [
-    Zmiany w sprawie są zapisywane natychmiast po zatwierdzeniu i widoczne dla wszystkich przypisanych użytkowników. Zwykły użytkownik nieprzypisany do sprawy nie może jej edytować. Historia zmian sprawy jest rejestrowana w logach.
+    Zmiany w sprawie są zapisywane natychmiast po zatwierdzeniu i widoczne dla wszystkich użytkowników. Zwykły użytkownik nieprzypisany do sprawy nie może jej edytować. Historia zmian sprawy jest rejestrowana w logach.
   ],
   stakeholder: "Pracownicy kancelarii",
   related: "WF9, WF12, WF14",
@@ -502,13 +539,13 @@ Grupę docelową stanowili adwokaci i radcowie prawni prowadzący kancelarie w r
   priority: "M - Must",
   name: "Przeglądanie listy spraw",
   description: [
-    Użytkownik musi mieć dostęp do listy spraw, do których jest przypisany. Superużytkownik widzi wszystkie sprawy w systemie. Lista powinna umożliwiać filtrowanie, sortowanie oraz wyszukiwanie spraw.
+    Użytkownik musi mieć dostęp do listy spraw. Lista powinna umożliwiać filtrowanie, sortowanie oraz wyszukiwanie spraw.
   ],
   acceptance-criteria: [
     Lista spraw wyświetla co najmniej: nazwę sprawy, status, tagi oraz #text(stroke: 0.5pt + red)[przypisanego klienta (do uzupełnienia na prototypie)]. Użytkownik może filtrować sprawy według statusu i klienta oraz wyszukiwać po nazwie.
   ],
   stakeholder: "Pracownicy kancelarii",
-  related: "WF9, WF12, WF13",
+  related: "WF9, WF12, WF13, WF14",
 )
 
 #requirement-card-functional(
@@ -516,12 +553,12 @@ Grupę docelową stanowili adwokaci i radcowie prawni prowadzący kancelarie w r
   priority: "M - Must",
   name: "Zmiana statusu sprawy",
   description: [
-    Użytkownik przypisany do sprawy musi mieć możliwość zmiany jej statusu zgodnie z aktualnym etapem prowadzenia sprawy. Dostępne statusy obejmują co najmniej: aktywna, w toku, zawieszona i 
+    Użytkownik przypisany do sprawy musi mieć możliwość zmiany jej statusu zgodnie z aktualnym etapem prowadzenia sprawy. Dostępne statusy obejmują co najmniej: nowa, w toku, zawieszona i 
     zakończona.
   ],
   acceptance-criteria: [
     Zmiana statusu jest rejestrowana wraz z datą, godziną i identyfikatorem użytkownika dokonującego zmiany.
-    Sprawa o statusie zarchiwizowana jest dostępna wyłącznie w trybie odczytu dla zwykłych użytkowników.
+    Sprawa o statusie "zakończona" jest dostępna wyłącznie w trybie odczytu dla zwykłych użytkowników. Sprawa o statusie "zawieszona" musi mieć termin do podjęcia.
   ],
   stakeholder: "Pracownicy kancelarii",
   related: "WF12, WF13, WF16",
@@ -532,13 +569,13 @@ Grupę docelową stanowili adwokaci i radcowie prawni prowadzący kancelarie w r
   priority: "M - Must",
   name: "Archiwizacja i zawieszenie sprawy",
   description: [
-    Użytkownik musi mieć możliwość archiwizacji zakończonej sprawy oraz tymczasowego zawieszenia sprawy w toku. Zarchiwizowane sprawy są przechowywane w systemie, ale nie figurują na głównej liście aktywnych spraw.
+    Użytkownik musi mieć możliwość archiwizacji sprawy oraz tymczasowego zawieszenia sprawy w toku. Zarchiwizowane sprawy są przechowywane w systemie, ale nie figurują na głównej liście aktywnych spraw.
   ],
   acceptance-criteria: [
-    Zarchiwizowana sprawa jest dostępna z poziomu osobnego podwidoku. Zawieszona sprawa jest przenoszona tymczasowo do archiwum, a w momencie zbliżania się terminu do podjęcia, automatycznie wraca do widoku listy aktywnych spraw. Operacja archiwizacji wymaga potwierdzenia przez użytkownika.
+    Zarchiwizowana sprawa jest dostępna z poziomu osobnego podwidoku. Zawieszona sprawa jest przenoszona tymczasowo do archiwum, a w momencie zbliżania się terminu do podjęcia, automatycznie wraca do widoku listy aktywnych spraw. Operacja archiwizacji i zawieszenia wymagają potwierdzenia przez użytkownika.
   ],
   stakeholder: "Pracownicy kancelarii",
-  related: "WF15, WF12",
+  related: "WF15, WF12, WF14",
 )
 
 #requirement-card-functional(
@@ -546,10 +583,10 @@ Grupę docelową stanowili adwokaci i radcowie prawni prowadzący kancelarie w r
   priority: "M - Must",
   name: "Przypisywanie użytkowników do sprawy",
   description: [
-    Superużytkownik musi mieć możliwość przypisywania i odpinania użytkowników od konkretnych spraw. Zwykły użytkownik może przypisać innego użytkownika do danej sprawy, jeżeli sam został wcześniej do niej przypisany. Przypisany użytkownik uzyskuje dostęp do wszystkich danych i dokumentów danej sprawy.
+    Superużytkownik musi mieć możliwość przypisywania i odpinania użytkowników od konkretnych spraw. Zwykły użytkownik może przypisać innego użytkownika do danej sprawy, jeżeli sam został wcześniej do niej przypisany. Przypisany użytkownik uzyskuje dostęp do edycji sprawy.
   ],
   acceptance-criteria: [
-    Po przypisaniu użytkownik widzi sprawę na swojej liście spraw natychmiast. Po odpięciu użytkownik traci dostęp do sprawy i nie widzi jej na liście.
+    Przypisany użytkownik uzyskuje dostęp do edycji sprawy natychmiast. Użytkownik nie może edytować sprawy, jeżeli nie jest do niej przypisany.
   ],
   stakeholder: "Administrator systemu",
   related: "WF9, WF12, WF14",
@@ -560,10 +597,10 @@ Grupę docelową stanowili adwokaci i radcowie prawni prowadzący kancelarie w r
   priority: "S - Should",
   name: "Komentarze w sprawie",
   description: [
-    Użytkownicy przypisani do sprawy powinni mieć możliwość dodawania komentarzy tekstowych w obrębie danej sprawy. Komentarze służą wewnętrznej komunikacji zespołu dotyczącej konkretnej sprawy.
+    Każdy użytkownik powinien mieć możliwość dodawania komentarzy tekstowych w obrębie danej sprawy. Komentarze służą wewnętrznej komunikacji zespołu dotyczącej konkretnej sprawy.
   ],
   acceptance-criteria: [
-    Komentarz jest widoczny dla wszystkich użytkowników przypisanych do sprawy natychmiast po dodaniu. Każdy komentarz wyświetla autora, datę i godzinę dodania. Komentarze są nieusuwalne i nie można ich edytować.
+    Komentarz jest widoczny dla wszystkich użytkowników natychmiast po dodaniu. Każdy komentarz wyświetla autora, datę i godzinę dodania. Komentarze są nieusuwalne i nie można ich edytować.
   ],
   stakeholder: "Pracownicy kancelarii",
   related: "WF12, WF17, WF9",
@@ -709,7 +746,7 @@ Grupę docelową stanowili adwokaci i radcowie prawni prowadzący kancelarie w r
     Użytkownik musi mieć możliwość eksportu wygenerowanego kodu QR w celu jego dalszego wykorzystania. Kod QR może być zapisany jako plik graficzny lub udostępniony przez systemowe opcje udostępniania urządzenia mobilnego.
   ],
   acceptance-criteria: [
-    Użytkownik może pobrać kod QR jako plik PNG lub PDF. Opcja udostępnienia kodu QR jest dostępna z poziomu widoku sprawy. Wyeksportowany kod QR jest czytelny i skanowalny po wydrukowaniu.
+    Użytkownik może pobrać kod QR jako plik PNG. Opcja udostępnienia kodu QR jest dostępna z poziomu widoku sprawy. Wyeksportowany kod QR jest czytelny i skanowalny po wydrukowaniu.
   ],
   stakeholder: "Pracownicy kancelarii",
   related: "WF25, WF29",
@@ -793,7 +830,7 @@ Grupę docelową stanowili adwokaci i radcowie prawni prowadzący kancelarie w r
   priority: "C - Could",
   name: "Archiwizacja dokumentów sprawy",
   description: [
-    System powinien umożliwiać archiwizację dokumentów powiązanych ze sprawą wraz z jej archiwizacją. Zarchiwizowane dokumenty są dostępne w trybie tylko do odczytu.
+    System powinien archiwizować dokumenty powiązane z daną sprawą wraz z archiwizacją tej sprawy. Zarchiwizowane dokumenty są dostępne w trybie tylko do odczytu.
   ],
   acceptance-criteria: [
     Archiwizacja sprawy powoduje automatyczne przeniesienie wszystkich jej dokumentów do archiwum. Zarchiwizowane dokumenty mogą być przeglądane, ale nie mogą być edytowane ani usuwane przez zwykłego użytkownika.
@@ -887,7 +924,7 @@ Grupę docelową stanowili adwokaci i radcowie prawni prowadzący kancelarie w r
     System musi wysyłać powiadomienia push do pracowników kancelarii o zdarzeniach wymagających ich uwagi, takich jak zbliżające się terminy, nowe komentarze w sprawie oraz zmiany statusu spraw.
   ],
   acceptance-criteria: [
-    Powiadomienie push dociera do użytkownika w czasie nieprzekraczającym 30 sekund od wystąpienia zdarzenia. Użytkownik może zarządzać kategoriami otrzymywanych powiadomień z poziomu ustawień aplikacji.
+    Powiadomienie push dociera do użytkownika niezwłocznie od wystąpienia zdarzenia. Użytkownik może zarządzać kategoriami otrzymywanych powiadomień z poziomu ustawień aplikacji.
   ],
   stakeholder: "Pracownicy kancelarii",
   related: "WF35, WF38, WF18, WF15",
@@ -895,7 +932,7 @@ Grupę docelową stanowili adwokaci i radcowie prawni prowadzący kancelarie w r
 
 #requirement-card-functional(
   id: "WF41",
-  priority: "S - Must",
+  priority: "M - Must",
   name: "Powiadomienia dla klientów kancelarii",
   description: [
     System musi automatycznie informować klientów kancelarii o zmianach w statusie spraw, do których są przypisani. Powiadomienia są wysyłane na adres e-mail podany w profilu klienta.
@@ -940,7 +977,7 @@ Grupę docelową stanowili adwokaci i radcowie prawni prowadzący kancelarie w r
 
 #requirement-card-functional(
   id: "WF44",
-  priority: "S - Should",
+  priority: "M - Must",
   name: "Panel superużytkownika",
   description: [
     Superużytkownik powinien mieć dostęp do dedykowanego panelu umożliwiającego zarządzanie użytkownikami, monitorowanie stanu systemu oraz konfigurację ustawień aplikacji. Panel jest niedostępny dla zwykłych użytkowników.
@@ -1001,14 +1038,14 @@ Grupę docelową stanowili adwokaci i radcowie prawni prowadzący kancelarie w r
 
 #requirement-card-functional(
   id: "WF48",
-  priority: "M - Must",
+  priority: "S - Should",
   name: "Eksport akt sprawy do PDF",
   description: [
-    Użytkownik przypisany do sprawy musi mieć możliwość wyeksportowania akt sprawy do pliku PDF. Eksport obejmuje dane sprawy, listę powiązanych dokumentów oraz historię zmian statusów.
+    Użytkownik przypisany do sprawy powinien mieć możliwość wyeksportowania akt sprawy do pliku PDF. Eksport obejmuje dane sprawy, listę powiązanych dokumentów oraz historię zmian statusów.
   ],
   acceptance-criteria: [
     Wygenerowany plik PDF zawiera kompletne dane sprawy oraz listę dokumentów z datami dodania. Plik jest
-    czytelny i możliwy do otwarcia bez dostępu do aplikacji Operacja eksportu jest dostępna z poziomu widoku sprawy.
+    czytelny i możliwy do otwarcia bez dostępu do aplikacji. Operacja eksportu jest dostępna z poziomu widoku sprawy.
   ],
   stakeholder: "Pracownicy kancelarii",
   related: "WF12, WF31, WPF10",
@@ -1035,14 +1072,10 @@ Grupę docelową stanowili adwokaci i radcowie prawni prowadzący kancelarie w r
   priority: "M - Must",
   name: "Usuwanie sprawy",
   description: [
-    Superużytkownik musi mieć możliwość trwałego usunięcia sprawy z systemu, w związku z wymaganiami RODO. Usunięcie sprawy powoduje trwałe usunięcie wszystkich powiązanych z nią danych, w tym dokumentów, terminów oraz
-    historii zmian. Operacja jest nieodwracalna i wymaga dwuetapowego potwierdzenia.
+    Superużytkownik musi mieć możliwość trwałego usunięcia danych klienta z systemu, w związku z wymaganiami RODO. Usunięcie profilu klienta powoduje trwałe usunięcie wszystkich powiązanych z nim danych, w tym spraw, dokumentów, terminów oraz historii zmian. Operacja jest nieodwracalna i wymaga dwuetapowego potwierdzenia.
   ],
   acceptance-criteria: [
-    Usunięcie sprawy jest dostępne wyłącznie dla superużytkownika. System wyświetla ostrzeżenie z listą powiązanych danych
-    które zostaną usunięte oraz wymaga wpisania nazwy sprawy
-    w celu potwierdzenia operacji. Usunięcie jest rejestrowane
-    w logach systemowych wraz z datą, godziną i identyfikatorem
+    Usunięcie danych jest dostępne wyłącznie dla superużytkownika. System wyświetla ostrzeżenie z listą powiązanych danych które zostaną usunięte oraz wymaga wpisania nazwy profilu klienta w celu potwierdzenia operacji. Usunięcie jest rejestrowane w logach systemowych wraz z datą, godziną i identyfikatorem
     superużytkownika.
   ],
   stakeholder: "Administrator systemu",
@@ -1057,8 +1090,7 @@ Grupę docelową stanowili adwokaci i radcowie prawni prowadzący kancelarie w r
   priority: "M - Must",
   name: "Bezpieczeństwo danych",
   description: [
-    System musi zapewniać ochronę danych osobowych klientów oraz poufnych informacji kancelarii przed nieuprawnionym dostępem, ujawnieniem, modyfikacją lub utratą. Hasła użytkowników muszą być przechowywane w postaci zahashowanej z wykorzystaniem odpowiedniego algorytmu. Komunikacja między klientem a serwerem musi odbywać się wyłącznie za pośrednictwem szyfrowanego protokołu HTTPS (TLS 1.2 lub wyższy). System musi rejestrować zdarzenia związane z dostępem do danych wrażliwych w postaci
-    niemodyfikowalnych logów audytowych.
+    System musi zapewniać ochronę danych osobowych klientów oraz poufnych informacji kancelarii przed nieuprawnionym dostępem, ujawnieniem, modyfikacją lub utratą. Hasła użytkowników muszą być przechowywane w postaci zahashowanej z wykorzystaniem odpowiedniego algorytmu. Komunikacja między klientem a serwerem musi odbywać się wyłącznie za pośrednictwem szyfrowanego protokołu HTTPS (TLS 1.2 lub wyższy). System musi rejestrować zdarzenia związane z dostępem do danych wrażliwych w postaci niemodyfikowalnych logów audytowych.
   ],
   acceptance-criteria: [
     Całość ruchu sieciowego odbywa się przez HTTPS — próba połączenia przez HTTP jest automatycznie przekierowywana. Logi audytowe są zapisywane dla każdej operacji odczytu i modyfikacji danych klientów oraz akt spraw.
@@ -1337,7 +1369,7 @@ Grupę docelową stanowili adwokaci i radcowie prawni prowadzący kancelarie w r
     Aplikacja musi działać poprawnie na urządzeniach mobilnych z systemem Android 12 lub nowszym.
   ],
   acceptance-criteria: [
-    Aplikacja instaluje się i działa bez błędów krytycznych na urządzeniach z Android 12+. Interfejs wyświetla się poprawnie na ekranach o różnych rozdzielczościach i gęstościach
+    Aplikacja instaluje się i działa bez błędów krytycznych na urządzeniach z Android 15+. Interfejs wyświetla się poprawnie na ekranach o różnych rozdzielczościach i gęstościach
     pikseli.
   ],
   stakeholder: "Zespół projektowy, Klienci kancelarii, Pracownicy kancelarii",
@@ -1376,11 +1408,11 @@ Grupę docelową stanowili adwokaci i radcowie prawni prowadzący kancelarie w r
 
 == Kryteria akceptacji systemu
 
-Kryteria akceptacji systemu zostały ustalone przez zespół projektowy jako zbiór mierzalnych i weryfikowalnych warunków, których spełnienie jest niezbędne do uznania systemu QRLawyer za gotowy do wdrożenia. Kryteria te wynikają bezpośrednio ze zdefiniowanych wymagań funkcjonalnych, pozafunkcjonalnych oraz dziedzinowych i stanowią podstawę do przeprowadzenia testów akceptacyjnych.
+Kryteria akceptacji systemu zostały ustalone przez zespół projektowy jako zbiór mierzalnych i weryfikowalnych warunków, których spełnienie jest niezbędne do uznania systemu QRLawyer za gotowy do wdrożenia. Kryteria te wynikają bezpośrednio ze zdefiniowanych wymagań funkcjonalnych i dziedzinowych oraz stanowią podstawę do przeprowadzenia testów akceptacyjnych.
 
 === Warunki odbioru systemu
 
-System QRLawyer zostanie uznany za gotowy do odbioru po łącznym spełnieniu następujących warunków:
+System QRLawyer zostanie uznany za gotowy do wdrożenia po łącznym spełnieniu następujących warunków:
 
 + Wszystkie wymagania o priorytecie M~--~Must zostały zaimplementowane i zweryfikowane pozytywnie.
 + Żadne z wymagań o priorytecie M~--~Must nie posiada otwartego błędu krytycznego uniemożliwiającego korzystanie z funkcjonalności.

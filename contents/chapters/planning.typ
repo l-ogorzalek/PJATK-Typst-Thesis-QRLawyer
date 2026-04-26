@@ -18,7 +18,7 @@
 === Ograniczenia techniczne i projektowe
 == Analiza ryzyka
 == Infrastruktura
-=== Ogranizacja zespołu
+=== Organizacja zespołu
 === Technologie i narzędzia
 === Infrastruktura komunikacji
 === Infrastruktura dokumentacji

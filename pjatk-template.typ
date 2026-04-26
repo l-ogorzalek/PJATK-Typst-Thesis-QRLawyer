@@ -102,9 +102,9 @@
     set document(title: title)
 
     let chosenMargins = if for-printing {
-      (top: 1in, bottom: 1.25in, inside: 2.25in, outside: 1.25in)
+      (top: 1in, bottom: 1.25in, inside: 1.25in, outside: 0.75in)
     } else {
-      (top: 1in, bottom: 1.25in, left: 1.75in, right: 1.75in)
+      (top: 1in, bottom: 1.25in, left: 1in, right: 1in)
     }
 
     set page(
@@ -206,6 +206,8 @@
     show figure.where(kind: table): set block(breakable: false)
     show figure.caption: set block(sticky: true)
 
+    show cite: it => super[#it]
+
     set math.equation(numbering: "(1)")
 
     context {
@@ -247,7 +249,7 @@
 
     body
 
-    bibliography("references.bib")
+    bibliography("references.bib", style: "ieee")
 
     context {
       show outline: set heading(outlined: true)
