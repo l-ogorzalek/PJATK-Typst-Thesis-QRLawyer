@@ -23,7 +23,7 @@
       [WF1],  [Logowanie do systemu],                        [Test manualny / UAT],          [Do weryfikacji],
       [WF2],  [Wylogowanie z systemu],                       [Test manualny],                [Do weryfikacji],
       [WF3],  [Automatyczne wygasanie sesji],                [Test automatyczny],            [Do weryfikacji],
-      [WF4],  [Resetowanie hasła],                           [#text(stroke: 0.5pt + red)[TBD]],              [Do weryfikacji],
+      [WF4],  [Zmiana hasła],                           [#text(stroke: 0.5pt + red)[TBD]],              [Do weryfikacji],
       [WF6],  [Tryb przerwy technicznej],                    [Test manualny],                [Do weryfikacji],
       [WF7],  [Tworzenie konta użytkownika],                 [Test manualny / UAT],          [Do weryfikacji],
       [WF8],  [Edycja i dezaktywacja konta],                 [Test manualny],                [Do weryfikacji],

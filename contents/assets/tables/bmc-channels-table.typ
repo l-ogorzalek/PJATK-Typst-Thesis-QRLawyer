@@ -31,7 +31,7 @@
       [Strona internetowa produktu, media społecznościowe],
 
       [Partnerski],
-      [Izby adwokackie i radcowskie, konferencje _legal tech_, branżowe media prawnicze],
+      [Izby adwokackie i radcowskie, konferencje legal tech, branżowe media prawnicze],
     )
   )
 }

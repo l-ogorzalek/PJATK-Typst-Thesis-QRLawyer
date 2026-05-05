@@ -261,8 +261,7 @@ Grupę docelową stanowili adwokaci i radcowie prawni prowadzący kancelarie w r
     _par("DB", display-name: "Baza Danych", shape: "database")
   
     _seq("User", "App", comment: "Wprowadza e-mail i hasło")
-    // TODO: Ustandaryzować jak wołane są metody API (nie POST/GET/etc.)
-    _seq("App", "API", comment: "POST /api/auth/login")
+    _seq("App", "API", comment: "POST /qrlawyer.auth.Auth/Login")
     _seq("API", "DB", comment: "Pobranie danych użytkownika")
     _seq("DB", "API", comment: "Zwraca rekord użytkownika", dashed: true)
     _seq("API", "API", comment: "Weryfikacja hasła")
@@ -270,9 +269,9 @@ Grupę docelową stanowili adwokaci i radcowie prawni prowadzący kancelarie w r
     _alt(
       "Dane logowania poprawne", {
         _seq("API", "API", comment: "Generowanie tokenu sesji")
-        _seq("API", "App", comment: "200 OK (Token sesji)", dashed: true)
+        _seq("API", "App", comment: "OK (Token sesji, klucze)", dashed: true)
         // TODO: Jakaś wzmianka gdzie zapisywany jest token?
-        _seq("App", "App", comment: "Zapiasnie tokenu sesji")
+        _seq("App", "App", comment: "Zapiasanie tokenu sesji")
         _seq("App", "User", comment: "Przekierowanie na pulpit główny", dashed: true)
       },
       "Dane logowania niepoprawne", {
@@ -392,7 +391,7 @@ Grupę docelową stanowili adwokaci i radcowie prawni prowadzący kancelarie w r
 #requirement-card-functional(
   id: "WF4",
   priority: "M - Must",
-  name: "Reset hasła",
+  name: "Zmiana hasła",
   description: [#text(stroke: 0.5pt + red)[User zmienia sam albo superużytkownik zmienia]
   ],
   acceptance-criteria: [#text(stroke: 0.5pt + red)[Do uzupełnienia]
@@ -846,7 +845,7 @@ Grupę docelową stanowili adwokaci i radcowie prawni prowadzący kancelarie w r
   priority: "M - Must",
   name: "Tworzenie i edycja terminu",
   description: [
-    Użytkownik musi mieć możliwość tworzenia nowych terminów powiązanych ze sprawą oraz ich edytowania. Termin zawiera co najmniej typ (nazwę/opis) datę i #text(stroke: 0.5pt + red)[godzinę (do uzupełnienia na prototypie)].
+    Użytkownik musi mieć możliwość tworzenia nowych terminów powiązanych ze sprawą oraz ich edytowania. Termin zawiera co najmniej typ (nazwę/opis) datę i godzinę.
   ],
   acceptance-criteria: [
     Nowy termin jest widoczny w terminarzu natychmiast po utworzeniu.
@@ -1431,7 +1430,5 @@ Weryfikacja spełnienia kryteriów akceptacji będzie przeprowadzana z wykorzyst
 
 Poniższa tabela przedstawia zbiorcze zestawienie wymagań funkcjonalnych o priorytecie M~--~Must wraz z przypisanymi metodami weryfikacji. Szczegółowe kryteria akceptacji dla każdego wymagania zostały
 zdefiniowane w odpowiednich kartach wymagań.
-
-#pagebreak(weak: true)
 
 #acceptance-criteria-table
