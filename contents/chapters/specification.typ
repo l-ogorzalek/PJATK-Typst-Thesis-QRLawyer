@@ -726,7 +726,7 @@ Grupę docelową stanowili adwokaci i radcowie prawni prowadzący kancelarie w r
 #requirement-card-functional(
   id: "WF27",
   priority: "M - Must",
-  name: "Deep linking — otwieranie sprawy przez kod QR",
+  name: "Deep linking \u{2013} otwieranie sprawy przez kod QR",
   description: [
     System musi obsługiwać mechanizm deep linkingu umożliwiający otwarcie konkretnej sprawy w aplikacji bezpośrednio po zeskanowaniu przypisanego kodu QR. Mechanizm musi działać zarówno na systemie iOS, jak i Android.
   ],
@@ -1288,7 +1288,7 @@ Grupę docelową stanowili adwokaci i radcowie prawni prowadzący kancelarie w r
 #requirement-card-functional(
   id: "WIO5",
   priority: "C - Could",
-  name: "Interfejs API — Konto Google",
+  name: "Interfejs API \u{2013} Konto Google",
   description: [
     System powinien umożliwiać uwierzytelnianie użytkowników za pośrednictwem Google Identity Services. Integracja pozwala na logowanie się do aplikacji przy użyciu istniejącego konta Google bez konieczności tworzenia osobnego hasła.
   ],
@@ -1304,7 +1304,7 @@ Grupę docelową stanowili adwokaci i radcowie prawni prowadzący kancelarie w r
 #requirement-card-functional(
   id: "WIO6",
   priority: "C - Could",
-  name: "Interfejs API — Konto Microsoft",
+  name: "Interfejs API \u{2013} Konto Microsoft",
   description: [
     System powinien umożliwiać uwierzytelnianie użytkowników za pośrednictwem Microsoft Identity Platform (Azure AD). Integracja pozwala na logowanie się do aplikacji przy użyciu istniejącego konta Microsoft lub konta służbowego Microsoft 365.
   ],
@@ -1333,7 +1333,7 @@ Grupę docelową stanowili adwokaci i radcowie prawni prowadzący kancelarie w r
 #requirement-card-functional(
   id: "WIO8",
   priority: "S - Should",
-  name: "Interfejs Bluetooth — drukarka naklejek",
+  name: "Interfejs Bluetooth \u{2013} drukarka naklejek",
   description: [
     Aplikacja powinna komunikować się z dedykowaną drukarką naklejek za pośrednictwem protokołu Bluetooth przy użyciu własnego kodu komunikacyjnego. Drukowanie odbywa się bezpośrednio z poziomu aplikacji bez udziału zewnętrznych aplikacji producenta drukarki.
   ],
@@ -1392,7 +1392,7 @@ Grupę docelową stanowili adwokaci i radcowie prawni prowadzący kancelarie w r
 #requirement-card-functional(
   id: "WSD4",
   priority: "C - Could",
-  name: "Przeglądarka internetowa — panel administracyjny",
+  name: "Przeglądarka internetowa \u{2013} panel administracyjny",
   description: [
     Panel administracyjny systemu powinien być dostępny z poziomu przeglądarki internetowej na urządzeniach
     stacjonarnych. Obsługiwane są aktualne wersje przeglądarek Chrome, Firefox oraz Safari.

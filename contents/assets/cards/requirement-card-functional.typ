@@ -17,7 +17,7 @@
 
   figure(
     kind: table,
-    caption: [#caption-prefix #id — #name],
+    caption: [#caption-prefix #id -- #name],
     supplement: "Tabela",
     block(
       stroke: 1pt + border-color,

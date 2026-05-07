@@ -52,6 +52,8 @@ Lorem ipsum dolor sit amet consectetur adipiscing elit. Ex sapien vitae pellente
   )
 )
 
+#show figure: set block(below: 1.0em)
+
 #import "@preview/codly:1.3.0": *
 #import "@preview/codly-languages:0.1.1": *
 #show: codly-init.with()

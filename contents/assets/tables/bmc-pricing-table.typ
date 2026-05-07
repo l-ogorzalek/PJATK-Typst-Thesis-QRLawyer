@@ -4,7 +4,7 @@
   show figure.where(kind: table): set block(breakable: true)
 
   figure(
-    caption: [Model cenowy -- Business Model Canvas],
+    caption: [Model cenowy QRLawyer -- Business Model Canvas],
     kind: table,
     table(
       columns: (70pt, 120pt, 120pt, 1fr),

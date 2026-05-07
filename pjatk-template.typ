@@ -256,6 +256,7 @@
 
     body
 
+    //TODO(Stefan) zmienić sposób wyświetlania przpisów w bibliografii na taki, by zawsze wyświetlały się pełne nazwy źródeł (obecny myśli, że w źródłach online pierwsze człony nazw firm to imiona autorów i zamienia je na inicjały)
     bibliography("references.bib", style: "ieee")
 
     context {

@@ -1,6 +1,9 @@
 #import "../assets/tables/bmc-channels-table.typ": bmc-channels-table
 #import "../assets/tables/bmc-pricing-table.typ": bmc-pricing-table
 #import "../assets/tables/bmc-costs-table.typ": bmc-costs-table
+#import "../assets/tables/swot-analysis-table.typ": swot-analysis-table
+#import "../assets/tables/sodis-table.typ": sodis-matrix, sodis-details
+#import "../assets/cards/risk-card.typ": risk-card
 
 = Analiza
 
@@ -95,9 +98,213 @@ Przyjęte podejście do projektowania QRLawyer odzwierciedla przekonanie zespoł
 
 == Analiza ryzyka
 
+Analiza ryzyka stanowi istotny element dokumentacji w projektach informatycznych, pozwalając na systematyczną identyfikację, ocenę i planowanie reakcji na czynniki mogące zagrozić powodzeniu przedsięwzięcia. W kontekście projektu QRLawyer szczególne znaczenie ma wielowymiarowość potencjalnych ryzyk -- obejmują one zarówno aspekty czysto techniczne, jak bezpieczeństwo danych czy niezawodność infrastruktury, ale również czynniki organizacyjne, rynkowe oraz prawne, wynikające ze specyfiki docelowego środowiska wdrożenia, jakim są kancelarie prawne przetwarzające dane objęte tajemnicą zawodową.
+
+Niniejszy podrozdział strukturyzuje analizę ryzyka na trzech poziomach. Pierwszym jest analiza SWOT, dostarczająca strategicznego obrazu mocnych i słabych stron projektu na tle szans i zagrożeń zewnętrznych. Drugim jest tabela wpływu SoDIS, oceniająca poszczególne komponenty systemu przez pryzmat filarów etycznych. Trzecim są karty ryzyk, stanowiące operacyjny rejestr konkretnych zagrożeń wraz z oceną ich prawdopodobieństwa, potencjalnego wpływu oraz planowanymi działaniami mitygującymi.
+
 === Analiza SWOT
+
+Analiza SWOT jest jedną z podstawowych metod oceny sytuacji strategicznej przedsięwzięcia, pozwalającą na usystematyzowanie czynników wewnętrznych -- silnych i słabych stron projektu -- oraz czynników zewnętrznych, czyli szans i zagrożeń wynikających z otoczenia rynkowego i regulacyjnego. Poniższa tabela przedstawia wyniki analizy przeprowadzonej dla projektu QRLawyer.
+
+#swot-analysis-table
+
+Powyższe zestawienie wskazuje na wyraźną asymetrię między potencjałem produktowym QRLawyer a dojrzałością organizacyjną i zasobową zespołu. Silne strony produktu -- w szczególności innowacyjność mechanizmu kodów QR, podejście _mobile-first_ i kompleksowość funkcjonalna -- są trudne do szybkiego skopiowania przez konkurencję, co stanowi solidną podstawę do budowania przewagi rynkowej. Jednocześnie słabe strony koncentrują się niemal wyłącznie po stronie organizacyjnej i finansowej, a nie produktowej, co oznacza, że są one potencjalnie możliwe do przezwyciężenia poprzez pozyskanie odpowiednich zasobów ludzkich i kapitałowych.
+
+Szanse zewnętrzne są wyjątkowo sprzyjające -- cyfryzacja wymiaru sprawiedliwości w Polsce tworzy środowisko, w którym kancelarie są niejako zmuszone do modernizacji swoich procesów, co obniża barierę adopcji nowych narzędzi. Głównym zagrożeniem pozostaje ryzyko wejścia na rynek mobilny przez istniejących, zasobnych graczy, co czyni szybkość wejścia na rynek i budowanie rozpoznawalności marki kluczowymi czynnikami sukcesu w perspektywie krótkoterminowej.
+
 === Tabela wpływu SoDIS
+
+Poniższa tabela przedstawia ocenę kluczowych komponentów i funkcjonalności systemu QRLawyer w odniesieniu do pięciu filarów etycznych: prywatności i poufności, bezpieczeństwa, jakości i precyzji, własności intelektualnej oraz równości społecznej. Ocena została przeprowadzona zgodnie z metodyką SoDIS #text(stroke: 0.5pt + red)[(dodać skrót do wykazu skrótów)] jako narzędziem etycznej analizy ryzyka w projektach informatycznych.
+
+#sodis-matrix
+
+#sodis-details
+
+Analiza SoDIS wskazuje, że największa koncentracja ryzyk etycznych występuje w obszarze prywatności i poufności, co jest naturalną konsekwencją charakteru przetwarzanych danych. Kancelarie prawne operują na informacjach objętych tajemnicą zawodową, a każdy komponent systemu, który przetwarza lub przesyła dane o sprawach i klientach, wymaga szczególnej uwagi projektowej. Ryzyka te są w większości mitygowane przez przyjętą architekturę bezpieczeństwa. Obszarem wymagającym dalszej analizy pozostaje kwestia własności danych przechowywanych w systemie oraz odpowiedzialności za ich przetwarzanie w kontekście relacji między QRLawyer jako dostawcą usługi a kancelarią jako administratorem danych osobowych swoich klientów w rozumieniu RODO.
+
 === Karty ryzyk
+
+#risk-card(
+  id: "R01",
+  kontekst: "Zespół projektowy \u{2013} zasoby ludzkie",
+  czynnik: "Niepewność co do składu zespołu przy ewentualnej komercjalizacji produktu",
+  prawdopodobienstwo-label: "Wysokie",
+  prawdopodobienstwo-value: 4,
+  wplyw-label: "Wysokie",
+  wplyw-value: 4,
+  skutki: "Brak ciągłości rozwoju produktu, utrata wiedzy dziedzinowej, konieczność rekrutacji i wdrożenia nowych pracowników od podstaw",
+  plan: "Dokumentowanie wiedzy i decyzji projektowych na bieżąco, wczesne ustalenie warunków ewentualnej komercjalizacji między członkami zespołu, opracowanie planu sukcesji kluczowych ról",
+)
+
+#risk-card(
+  id: "R02",
+  kontekst: "Infrastruktura techniczna \u{2013} bezpieczeństwo danych",
+  czynnik: "Naruszenie bezpieczeństwa danych użytkowników (wyciek lub nieautoryzowany dostęp)",
+  prawdopodobienstwo-label: "Niskie",
+  prawdopodobienstwo-value: 2,
+  wplyw-label: "Krytyczne",
+  wplyw-value: 5,
+  skutki: "Utrata zaufania użytkowników, odpowiedzialność prawna wynikająca z naruszenia przepisów, potencjalne kary administracyjne, szkody wizerunkowe",
+  plan: "Szyfrowanie danych w spoczynku i w tranzycie, zasada zerowej wiedzy po stronie dostawcy, regularne audyty bezpieczeństwa, wdrożenie 2FA, monitorowanie logów aktywności, opracowanie procedury reagowania na incydenty",
+)
+
+#risk-card(
+  id: "R03",
+  kontekst: "Rynek docelowy \u{2013} adopcja produktu",
+  czynnik: "Konserwatyzm środowiska prawniczego wobec nowych technologii mobilnych",
+  prawdopodobienstwo-label: "Średnie",
+  prawdopodobienstwo-value: 3,
+  wplyw-label: "Wysokie",
+  wplyw-value: 4,
+  skutki: "Niska adopcja produktu, wydłużony czas pozyskiwania pierwszych płacących użytkowników, konieczność zwiększenia nakładów na edukację rynku",
+  plan: "Budowanie wiarygodności przez kanały branżowe (izby adwokackie i radcowskie), program poleceń, uproszczony onboarding z interaktywnym samouczkiem, okres próbny umożliwiający ocenę wartości produktu bez ryzyka finansowego",
+)
+
+#risk-card(
+  id: "R04",
+  kontekst: "Otoczenie konkurencyjne",
+  czynnik: "Zdominowanie rynku mobilnego przez istniejących, zasobnych graczy (np. Wolters Kluwer, LegalDesk)",
+  prawdopodobienstwo-label: "Średnie",
+  prawdopodobienstwo-value: 3,
+  wplyw-label: "Wysokie",
+  wplyw-value: 4,
+  skutki: "Utrata przewagi w segmencie mobilnym, konieczność konkurowania cenowego z podmiotami o znacznie większych zasobach marketingowych",
+  plan: "Szybkie wejście na rynek z kompletnym zestawem funkcji core, budowanie lojalności użytkowników przez uczciwy model cenowy i wysoką jakość wsparcia, rozwijanie unikalnej funkcjonalności QR jako trudnej do szybkiego skopiowania przewagi konkurencyjnej",
+)
+
+#risk-card(
+  id: "R05",
+  kontekst: "Środowisko regulacyjne \u{2013} zgodność z przepisami",
+  czynnik: "Zmiany w przepisach dotyczących przetwarzania danych prawnych lub tajemnicy zawodowej",
+  prawdopodobienstwo-label: "Średnie",
+  prawdopodobienstwo-value: 3,
+  wplyw-label: "Wysokie",
+  wplyw-value: 4,
+  skutki: "Konieczność kosztownych modyfikacji architektury systemu, czasowe zawieszenie usługi, ryzyko niezgodności z przepisami skutkujące odpowiedzialnością prawną",
+  plan: "Ciągły monitoring zmian regulacyjnych (RODO, przepisy branżowe), projektowanie systemu zgodnie z zasadami branżowymi, utrzymanie obsługi prawnej jako stałego zasobu organizacji, aktywne uczestnictwo w konsultacjach branżowych",
+)
+
+#risk-card(
+  id: "R06",
+  kontekst: "Finanse \u{2013} model przychodowy",
+  czynnik: "Brak zewnętrznego finansowania uniemożliwiający komercjalizację produktu",
+  prawdopodobienstwo-label: "Średnie",
+  prawdopodobienstwo-value: 3,
+  wplyw-label: "Krytyczne",
+  wplyw-value: 5,
+  skutki: "Niemożność pokrycia kosztów infrastruktury, marketingu i wynagrodzeń, zatrzymanie rozwoju produktu na etapie prototypu",
+  plan: "Wczesne przygotowanie materiałów dla inwestorów (pitch deck, model finansowy), aplikowanie o granty NCBR i fundusze unijne, rozważenie udziału w programach akceleracyjnych dla startupów",
+)
+
+#risk-card(
+  id: "R07",
+  kontekst: "Infrastruktura techniczna \u{2013} dostępność usługi",
+  czynnik: "Awaria infrastruktury serwerowej skutkująca niedostępnością aplikacji",
+  prawdopodobienstwo-label: "Niskie",
+  prawdopodobienstwo-value: 2,
+  wplyw-label: "Wysokie",
+  wplyw-value: 4,
+  skutki: "Brak dostępu użytkowników do danych o sprawach i terminach, ryzyko uchybienia terminom procesowym przez klientów kancelarii, utrata zaufania do produktu",
+  plan: "Wdrożenie monitoringu dostępności systemu, regularne kopie zapasowe danych, opracowanie procedury disaster recovery, docelowe przejście na infrastrukturę chmurową z gwarantowanym SLA",
+)
+
+#risk-card(
+  id: "R08",
+  kontekst: "Produkt \u{2013} jakość oprogramowania",
+  czynnik: "Krytyczny błąd w module powiadomień skutkujący wysłaniem błędnych informacji do klientów kancelarii",
+  prawdopodobienstwo-label: "Niskie",
+  prawdopodobienstwo-value: 2,
+  wplyw-label: "Wysokie",
+  wplyw-value: 4,
+  skutki: "Dezinformacja klientów kancelarii, naruszenie zaufania do kancelarii jako użytkownika systemu, potencjalna odpowiedzialność prawna kancelarii wobec swoich klientów",
+  plan: "Wdrożenie okna czasowego umożliwiającego anulowanie powiadomienia przed wysłaniem, testy regresyjne modułu powiadomień przy każdej aktualizacji, szczegółowe logowanie wysłanych wiadomości",
+)
+
+#risk-card(
+  id: "R09",
+  kontekst: "Dystrybucja \u{2013} platformy mobilne",
+  czynnik: "Odrzucenie aplikacji przez App Store lub Google Play w procesie weryfikacji",
+  prawdopodobienstwo-label: "Niskie",
+  prawdopodobienstwo-value: 2,
+  wplyw-label: "Średnie",
+  wplyw-value: 3,
+  skutki: "Opóźnienie wejścia na rynek, konieczność modyfikacji aplikacji zgodnie z wytycznymi platformy, dodatkowe koszty i czas pracy zespołu",
+  plan: "Dokładne zapoznanie się z wytycznymi App Store Review Guidelines i Google Play Policy przed złożeniem aplikacji, wczesne testy zgodności, uwzględnienie czasu weryfikacji w harmonogramie wdrożenia",
+)
+
+#risk-card(
+  id: "R10",
+  kontekst: "Produkt \u{2013} kompatybilność sprzętowa",
+  czynnik: "Niska kompatybilność modułu drukowania z drukarkami używanymi przez klientów",
+  prawdopodobienstwo-label: "Średnie",
+  prawdopodobienstwo-value: 3,
+  wplyw-label: "Średnie",
+  wplyw-value: 3,
+  skutki: "Niemożność korzystania z kluczowej funkcjonalności QR przez część użytkowników, negatywne opinie i obniżona ocena produktu w sklepach aplikacji",
+  plan: "Rozszerzenie zestawu testowanych modeli drukarek przed wydaniem, dokumentacja kompatybilnych urządzeń w bazie wiedzy, opracowanie procedury zgłaszania niekompatybilnych drukarek przez użytkowników",
+)
+
+#risk-card(
+  id: "R11",
+  kontekst: "Rynek docelowy \u{2013} retencja użytkowników",
+  czynnik: "Wysoki wskaźnik rezygnacji z subskrypcji po zakończeniu okresu próbnego",
+  prawdopodobienstwo-label: "Średnie",
+  prawdopodobienstwo-value: 3,
+  wplyw-label: "Wysokie",
+  wplyw-value: 4,
+  skutki: "Niski wskaźnik konwersji trial-to-paid, niewystarczające przychody do pokrycia kosztów operacyjnych, konieczność rewizji modelu cenowego lub funkcjonalności",
+  plan: "Analiza zachowania użytkowników w okresie próbnym, aktywny onboarding z samouczkiem i bazą wiedzy, powiadomienie przed końcem okresu próbnego, zbieranie opinii od użytkowników rezygnujących z subskrypcji",
+)
+
+#risk-card(
+  id: "R12",
+  kontekst: "Prawne \u{2013} własność intelektualna",
+  czynnik: "Brak formalnego uregulowania własności intelektualnej między członkami zespołu przed komercjalizacją",
+  prawdopodobienstwo-label: "Średnie",
+  prawdopodobienstwo-value: 3,
+  wplyw-label: "Wysokie",
+  wplyw-value: 4,
+  skutki: "Spory prawne między członkami zespołu, zablokowanie możliwości komercjalizacji, konieczność kosztownej obsługi prawnej",
+  plan: "Zawarcie umów regulujących własność intelektualną między członkami zespołu przed podjęciem jakichkolwiek działań komercjalizacyjnych, rejestracja znaku towarowego QRLawyer",
+)
+
+#risk-card(
+  id: "R13",
+  kontekst: "Produkt \u{2013} zakres funkcjonalny",
+  czynnik: "Rozszerzanie zakresu funkcjonalności ponad pierwotne założenia (scope creep) opóźniające wydanie produktu",
+  prawdopodobienstwo-label: "Wysokie",
+  prawdopodobienstwo-value: 4,
+  wplyw-label: "Średnie",
+  wplyw-value: 3,
+  skutki: "Opóźnienie wejścia na rynek, przekroczenie budżetu i zasobów czasowych zespołu, ryzyko niedostarczenia kompletnego zestawu funkcji core",
+  plan: "Ścisłe trzymanie się zdefiniowanego zakresu MVP, formalne zarządzanie zmianami zakresu, priorytetyzacja backlogu funkcjonalności według wartości dla użytkownika",
+)
+
+#risk-card(
+  id: "R14",
+  kontekst: "Infrastruktura techniczna \u{2013} skalowanie",
+  czynnik: "Niewystarczająca wydajność infrastruktury przy gwałtownym wzroście liczby użytkowników",
+  prawdopodobienstwo-label: "Niskie",
+  prawdopodobienstwo-value: 2,
+  wplyw-label: "Średnie",
+  wplyw-value: 3,
+  skutki: "Spowolnienie lub niedostępność aplikacji, negatywne doświadczenie użytkowników w krytycznym momencie wzrostu, utrata potencjalnych klientów",
+  plan: "Projektowanie architektury systemu z myślą o skalowalności od początku, wdrożenie monitoringu wydajności, przygotowanie planu migracji na infrastrukturę chmurową przy osiągnięciu zdefiniowanych progów obciążenia",
+)
+
+#risk-card(
+  id: "R15",
+  kontekst: "Rynek docelowy \u{2013} edukacja użytkowników",
+  czynnik: "Niewystarczająca świadomość rynku o istnieniu produktu w fazie wejścia",
+  prawdopodobienstwo-label: "Wysokie",
+  prawdopodobienstwo-value: 4,
+  wplyw-label: "Średnie",
+  wplyw-value: 3,
+  skutki: "Wolne tempo pozyskiwania pierwszych użytkowników, wydłużony czas do osiągnięcia progu rentowności, konieczność zwiększenia nakładów marketingowych",
+  plan: "Aktywna obecność w kanałach branżowych (izby prawnicze, konferencje legal tech), działania SEO i content marketing na stronie produktu, program poleceń zachęcający aktywnych użytkowników do rekomendowania aplikacji",
+)
+
+Zidentyfikowane piętnaście ryzyk obejmuje zróżnicowane kategorie zagrożeń -- od technicznych i infrastrukturalnych, przez organizacyjne i prawne, po rynkowe i biznesowe -- co odzwierciedla złożoność przedsięwzięcia wykraczającą poza sam proces wytwarzania oprogramowania. Najwyższy łączny poziom ryzyka przypisano zagrożeniom związanym z bezpieczeństwem danych (R02) oraz brakiem zewnętrznego finansowania przy komercjalizacji (R06), co wynika z krytycznego wpływu tych czynników na ciągłość i wiarygodność produktu, nawet przy stosunkowo niskim prawdopodobieństwie ich wystąpienia. Ryzyka o wysokim prawdopodobieństwie, lecz umiarkowanym wpływie -- takie jak _scope creep_ (R13) czy niska świadomość rynkowa (R15) -- wymagają z kolei stałego monitorowania w toku realizacji projektu. Przyjęte plany zarządzania ryzykiem koncentrują się na działaniach prewencyjnych i mitygujących, a nie wyłącznie reaktywnych, co jest zgodne z rekomendowanym podejściem do zarządzania ryzykiem w projektach informatycznych.
 
 == Analiza biznesowa
 
@@ -244,8 +451,6 @@ Do kategorii kosztów zmiennych należą między innymi:
 - Koszty transakcyjne operatora płatności -- prowizje pobierane przez operatora płatności od każdej transakcji subskrypcyjnej, typowo wynoszące od 1,4% do 2,9% wartości transakcji plus stała opłata za transakcję.
 - Koszty wysyłki wiadomości e-mail -- koszty usługi mailowej rosną proporcjonalnie do liczby użytkowników i częstotliwości wysyłanych powiadomień automatycznych.
 - Koszty wsparcia technicznego -- przy wzroście bazy użytkowników rośnie wolumen zgłoszeń wymagających obsługi, co może generować potrzebę zwiększenia zasobów ludzkich dedykowanych wsparciu.
-
-#pagebreak(weak: true)
 
 Poniższa tabela podsumowuje strukturę kosztów QRLawyer według kategorii i charakteru:
 
