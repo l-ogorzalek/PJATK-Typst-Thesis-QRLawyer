@@ -98,6 +98,7 @@
     reviewer: "Reviewer's Name",
     abstract: placeholder-abstract,
     keywords: placeholder-keywords,
+    project-card-content: none,
 ) = {
     set document(title: title)
 
@@ -228,6 +229,12 @@
     context {
       pagebreak()
       abstractAndKeywords(abstract, keywords)
+    }
+
+    if project-card-content != none {
+      pagebreak()
+      project-card-content
+      pagebreak()
     }
 
     align(
