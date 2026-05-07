@@ -102,13 +102,15 @@ Analiza ryzyka stanowi istotny element dokumentacji w projektach informatycznych
 
 Niniejszy podrozdział strukturyzuje analizę ryzyka na trzech poziomach. Pierwszym jest analiza SWOT, dostarczająca strategicznego obrazu mocnych i słabych stron projektu na tle szans i zagrożeń zewnętrznych. Drugim jest tabela wpływu SoDIS, oceniająca poszczególne komponenty systemu przez pryzmat filarów etycznych. Trzecim są karty ryzyk, stanowiące operacyjny rejestr konkretnych zagrożeń wraz z oceną ich prawdopodobieństwa, potencjalnego wpływu oraz planowanymi działaniami mitygującymi.
 
+Skalę ryzyka określono na podstawie prawdopodobienstwie wystapienia oraz wpływu na projekt. Prawdopodobieństwo oraz wpływ oceniono w skali od jeden do pięciu. Wynik poziomu ryzyka stanowi iloczyn tych wartości, przy czym maksymalny wynik to 25.
+
 === Analiza SWOT
 
 Analiza SWOT jest jedną z podstawowych metod oceny sytuacji strategicznej przedsięwzięcia, pozwalającą na usystematyzowanie czynników wewnętrznych -- silnych i słabych stron projektu -- oraz czynników zewnętrznych, czyli szans i zagrożeń wynikających z otoczenia rynkowego i regulacyjnego. Poniższa tabela przedstawia wyniki analizy przeprowadzonej dla projektu QRLawyer.
 
 #swot-analysis-table
 
-Powyższe zestawienie wskazuje na wyraźną asymetrię między potencjałem produktowym QRLawyer a dojrzałością organizacyjną i zasobową zespołu. Silne strony produktu -- w szczególności innowacyjność mechanizmu kodów QR, podejście _mobile-first_ i kompleksowość funkcjonalna -- są trudne do szybkiego skopiowania przez konkurencję, co stanowi solidną podstawę do budowania przewagi rynkowej. Jednocześnie słabe strony koncentrują się niemal wyłącznie po stronie organizacyjnej i finansowej, a nie produktowej, co oznacza, że są one potencjalnie możliwe do przezwyciężenia poprzez pozyskanie odpowiednich zasobów ludzkich i kapitałowych.
+Powyższe zestawienie wskazuje na wyraźną asymetrię między potencjałem produktowym QRLawyer a dojrzałością organizacyjną i zasobową zespołu. Silne strony produktu -- w szczególności innowacyjność mechanizmu kodów QR, podejście _mobile-first_ i kompleksowość funkcjonalna -- są trudne do szybkiego skopiowania przez konkurencję, co stanowi solidną podstawę do budowania przewagi rynkowej. Jednocześnie słabe strony koncentrują się niemal wyłącznie w obrębie organizacji i finansów, a nie produktu, co oznacza, że są one potencjalnie możliwe do przezwyciężenia poprzez pozyskanie odpowiednich zasobów ludzkich i kapitałowych.
 
 Szanse zewnętrzne są wyjątkowo sprzyjające -- cyfryzacja wymiaru sprawiedliwości w Polsce tworzy środowisko, w którym kancelarie są niejako zmuszone do modernizacji swoich procesów, co obniża barierę adopcji nowych narzędzi. Głównym zagrożeniem pozostaje ryzyko wejścia na rynek mobilny przez istniejących, zasobnych graczy, co czyni szybkość wejścia na rynek i budowanie rozpoznawalności marki kluczowymi czynnikami sukcesu w perspektywie krótkoterminowej.
 

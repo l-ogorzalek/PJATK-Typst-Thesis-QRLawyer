@@ -250,6 +250,8 @@ Grupę docelową stanowili adwokaci i radcowie prawni prowadzący kancelarie w r
 
 == Diagramy sekwencji
 
+// Endpointy w rzeczywistości nazywają się `/qrlawyer.auth.Auth/Login`, `/qrlawyer.cases.Cases/NewCase`, ale skracamy je do `/Auth/Login` oraz `Cases/NewCase` dla zwięzłości.
+
 #diagram(
   [Diagram sekwencji logowania],
   {
@@ -261,26 +263,66 @@ Grupę docelową stanowili adwokaci i radcowie prawni prowadzący kancelarie w r
     _par("DB", display-name: "Baza Danych", shape: "database")
   
     _seq("User", "App", comment: "Wprowadza e-mail i hasło")
-    _seq("App", "API", comment: "POST /qrlawyer.auth.Auth/Login")
+    _seq("App", "API", comment: "POST /Auth/Login")
     _seq("API", "DB", comment: "Pobranie danych użytkownika")
-    _seq("DB", "API", comment: "Zwraca rekord użytkownika", dashed: true)
+    _seq("DB", "API", comment: "Rekord użytkownika", dashed: true)
     _seq("API", "API", comment: "Weryfikacja hasła")
     
     _alt(
       "Dane logowania poprawne", {
         _seq("API", "API", comment: "Generowanie tokenu sesji")
         _seq("API", "App", comment: "OK (Token sesji, klucze)", dashed: true)
-        // TODO: Jakaś wzmianka gdzie zapisywany jest token?
         _seq("App", "App", comment: "Zapiasanie tokenu sesji")
         _seq("App", "User", comment: "Przekierowanie na pulpit główny", dashed: true)
       },
       "Dane logowania niepoprawne", {
-        _seq("API", "App", comment: "401 Unauthorized", dashed: true)
+        _seq("API", "App", comment: "Unauthorized (Komunikat błędu)", dashed: true)
         _seq("App", "User", comment: [Komunikat: "Nieprawidłowy login lub hasło"], dashed: true)
       }
     )
   }
 )
+#pagebreak()
+
+#diagram(
+  [Diagram sekwencji tworzenia nowej sprawy],
+  {
+    import chronos:*;
+
+    _par("User", display-name: "Użytkownik", shape: "actor")
+    _par("App", display-name: "Aplikacja (Frontend)")
+    _par("API", display-name: "Backend (API)")
+    _par("DB", display-name: "Baza Danych", shape: "database")
+
+    _seq("User", "App", comment: "Otwiera formularz nowej sprawy")
+    _seq("App", "User", comment: "Wyświetla formularz", dashed: true)
+    _seq("User", "App", comment: "Wypełnia formularz")
+    _seq("App", "App", comment: "Walidacja danych formularza")
+
+    _alt(
+      "Generowany losowo kod QR", {
+        _seq("User", "App", comment: [Klika "Zapisz"])
+        _seq("App", "API", comment: "POST /Cases/NewCase")
+        _seq("API", "DB", comment: "Generowanie kodu QR")
+        _seq("DB", "API", comment: "Wygenerowany kod QR", dashed: true)
+      },
+      "Wygenerowany wcześniej kod QR", {
+        _seq("User", "App", comment: [Wybiera "Przypisz kod QR"])
+        _seq("App", "User", comment: "Wyświetla skaner kodów QR", dashed: true)
+        _seq("User", "App", comment: "Skanuje istniejący kod QR")
+        _seq("App", "User", comment: "Potwierdza poprawność kodu QR", dashed: true)
+        _seq("User", "App", comment: [Klika "Zapisz"])
+        _seq("App", "API", comment: "POST /Cases/NewCase")
+      }
+    )
+    
+    _seq("API", "DB", comment: "INSERT (Dane sprawy)")
+    _seq("DB", "API", comment: "ID sprawy", dashed: true)
+    _seq("API", "App", comment: "OK (ID sprawy)", dashed: true)
+    _seq("App", "User", comment: "Wyświetla widok szczegółów sprawy", dashed: true)
+  }
+)
+#pagebreak()
 
 == Wymagania ogólne i dziedzinowe
 

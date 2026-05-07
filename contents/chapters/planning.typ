@@ -1,6 +1,7 @@
 = Planowanie
 == Metodologia pracy
-== Planowany zakres prac
+== Podsumowanie planowanego zakresu prac
+// Usunąć poniższe podrozdziały?
 === Uwierzytelnianie i zarządzanie kontami
 === Pulpit
 === Baza klientów
@@ -12,11 +13,13 @@
 === Powiadomienia push dla pracowników
 === Automatyczne powiadomienia mailowe dla klientów
 === Panel konta, widok ustawień i logi superużytkowników
+//    ^
+//    |
+//    |
 == Harmonogram pracy
 == Zasoby i ograniczenia projektu
 === Zasoby projektu
 === Ograniczenia techniczne i projektowe
-== Analiza ryzyka
 == Infrastruktura
 === Organizacja zespołu
 === Technologie i narzędzia

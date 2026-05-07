@@ -93,7 +93,9 @@ Lorem ipsum dolor sit amet consectetur adipiscing elit. Ex sapien vitae pellente
 #include "contents/chapters/specification.typ"
 #include "contents/chapters/system-project.typ"
 #include "contents/chapters/production.typ"
+#include "contents/chapters/incremental-development.typ"
 #include "contents/chapters/tests.typ"
+#include "contents/chapters/presentation.typ"
 #include "contents/chapters/workload.typ"
 #include "contents/chapters/summary.typ"
 
