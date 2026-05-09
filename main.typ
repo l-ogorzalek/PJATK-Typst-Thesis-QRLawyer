@@ -40,8 +40,16 @@ Lorem ipsum dolor sit amet consectetur adipiscing elit. Ex sapien vitae pellente
     acronym: "QRL",
     date: "25.01.2025",
     supervisor: "dr hab. Marek Bednarczyk",
-    reviewer: "TBD",
+    reviewer: [#text(stroke: 0.5pt + red)[TBD]],
     completion-date: "28.06.2026",
+    goals: "Stworzenie działającej aplikacji mobilnej zgodnej z wymaganiami określonymi w dokumentacji projektowej. Aplikacja ma na celu usprawnienie obiegu dokumentów oraz zarządzania sprawami w kancelariach prawnych poprzez wykorzystanie kodów QR do powiązania fizycznych akt z ich cyfrową reprezentacją, automatyzację powiadomień oraz centralizację informacji o sprawach i klientach w jednym narzędziu dostępnym z urządzenia mobilnego.",
+    results: "Aplikacja mobilna na platformy iOS i Android wraz z obsługującym ją serwerem backendowym oraz dokumentacja projektowa w formie pracy inżynierskiej.",
+    success-criteria: (
+      [Ukończenie dokumentacji projektowej],
+      [Opracowanie aplikacji mobilnej realizującej wymagania określone w dokumentacji],
+      [Zrealizowanie testów aplikacji],
+    ),
+    constraints: "Czas realizacji projektu, doświadczenie zespołu, ograniczenia technologiczne oraz ograniczenia budżetowe",
     team: (
       (name: "Łukasz Ogorzałek",  album: "s27447", specialization: "Cyberbezpieczeństwo", mode: "Niestacjonarny"),
       (name: "Stefan Karczewski", album: "s27459", specialization: "Cyberbezpieczeństwo", mode: "Niestacjonarny"),
